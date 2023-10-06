@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'lil-gui'
+import {  RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper'
 
 THREE.ColorManagement.enabled = false
 
@@ -41,7 +42,20 @@ rectAreaLight.lookAt(new THREE.Vector3()) // default 0,0,0
 scene.add(rectAreaLight)
 
 //* SPOTLIGHT
-const 
+const spotLight = new THREE.SpotLight(0x78ff00, 0.5, 10, Math.PI * 0.1, 0.25, 1)
+spotLight.position.set(0, 2, 3)
+scene.add(spotLight)
+scene.add(spotLight.target)
+spotLight.target.position.x = -0.75
+
+//!     LIGHT HELPERS
+const hemisphereLightHelper = new THREE.HemisphereLightHelper(hemisphereLight,0.2)
+const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 0.2)
+const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.2)
+const spotLightHelper = new THREE.SpotLightHelper(spotLight)
+const rectAreaLightHelper = new RectAreaLightHelper(rectAreaLight)
+
+scene.add(hemisphereLightHelper, directionalLightHelper, pointLightHelper, spotLightHelper, rectAreaLightHelper)
 
 //!     Material
 const material = new THREE.MeshStandardMaterial()
